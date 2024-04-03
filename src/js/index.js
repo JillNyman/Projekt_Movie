@@ -126,7 +126,7 @@ async function displaySearchResult(){
       let listOfTvshowsEl = document.createElement("div");
       listOfTvshowsEl.dataset.id = tvshows.results[i].id; 
       listOfTvshowsEl.classList.add("results-tv-item");
-      posterEl = "https://image.tmdb.org/t/p/w45" + tvshows.results[i].poster_path;     
+      let posterEl = "https://image.tmdb.org/t/p/w45" + tvshows.results[i].poster_path;     
  
       listOfTvshowsEl.innerHTML = `<div class = "results-item-thumbnail">
       <img src = ${posterEl}></div>
