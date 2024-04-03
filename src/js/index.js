@@ -103,7 +103,7 @@ async function displaySearchResult(){
       let listOfMoviesEl = document.createElement("div");
       listOfMoviesEl.dataset.id = movies.results[i].id; 
       listOfMoviesEl.classList.add("results-movie-item");
-      posterEl = "https://image.tmdb.org/t/p/w45" + movies.results[i].poster_path;   
+      let posterEl = "https://image.tmdb.org/t/p/w45" + movies.results[i].poster_path;   
 
       listOfMoviesEl.innerHTML = `<div class = "results-item-thumbnail">
       <img src = ${posterEl}></div>
