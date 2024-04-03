@@ -1,4 +1,5 @@
 
+"use strict";
 
 import("./omdb").then(function (page) {
   page.render();
@@ -222,7 +223,7 @@ async function getIMDBidMovie(movieDetails){
     const result = await response.json();
 
   let IMDBid = result.imdb_id;
-  const responseOMDB = await fetch(`http://www.omdbapi.com/?apikey=68bda63a&i=${IMDBid}`);
+  const responseOMDB = await fetch(`https://www.omdbapi.com/?apikey=68bda63a&i=${IMDBid}`);
   const resultOMDB = await responseOMDB.json();
 
 getInfoOmdb(resultOMDB, movieDetails);          
@@ -242,7 +243,7 @@ async function getIMDBidTV(tvDetails){
     const result = await response.json();
 
   let IMDBid = result.imdb_id;
-  const responseOMDB = await fetch(`http://www.omdbapi.com/?apikey=68bda63a&i=${IMDBid}`);
+  const responseOMDB = await fetch(`https://www.omdbapi.com/?apikey=68bda63a&i=${IMDBid}`);
   const resultOMDB = await responseOMDB.json();
 
   getInfoOmdbTV(resultOMDB, tvDetails);
