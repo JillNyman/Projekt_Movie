@@ -36,6 +36,7 @@ const showMovieInfo = document.getElementById("movie-info");//DIV FÖR SPECIFICS
 const searchResultTV =  document.getElementById("results-tvdb");//RESULTATLISTA SERIER
 const showTvInfo = document.getElementById("tv-info");//DIV FÖR SPECIFICS FÖR EN serie, SKA TAS BORT VID NY SÖKNING
 const seasonEl = document.getElementById("season-container"); //container där alla tv-säsonger hamnar
+//let seasonDisplay = document.getElementsByClassName("season-details");
 
 //submitBtn.addEventListener("click", searchMovies, false);
 submitBtn.addEventListener("click", displaySearchResult, false);
@@ -338,6 +339,8 @@ for(let i = 0; i < seasonArray.length; i++){
   <p class="seasons"><b>${seasonArray[i].name}</b> Antal avsnitt: ${seasonArray[i].episode_count}</p>
   </div>`;
 
+ 
+
   seasonEl.appendChild(seasonList);
 }
 makeSeasonLinks(tvDetails);
@@ -372,9 +375,12 @@ showTvInfo.appendChild(streamingInfoTV);
 //HÄMTA INFO OM SPECIFIK SERIESÄSONG, VID KLICK
 async function makeSeasonLinks(tvDetails){
   const TVseasons = seasonEl.querySelectorAll(".seasons-div");
+  
 
   TVseasons.forEach((season) => {
-    season.addEventListener("click", async () => {
+    season.addEventListener("click", async () => {    
+      
+ 
       //VID KLICK GÖRS API-ANROP
       const url = `https://api.themoviedb.org/3/tv/${tvDetails.id}/season/${season.dataset.id}?language=en-US`;
     
@@ -396,23 +402,23 @@ async function makeSeasonLinks(tvDetails){
 
 //VISA INFO OM SPECIFIK SERIESÄSONG
 async function displaySeasons(seasonDetails){
-
-  let episodes = seasonDetails.episodes;
-  let seasonInfo = document.createElement("div");
   
-  seasonInfo.classList.add("season-details");
+  let episodes = seasonDetails.episodes;
+  let seasonDisplay = document.createElement("div");
+  
+  seasonDisplay.classList.add("season-details");
 
-  seasonInfo.innerHTML = `
+  seasonDisplay.innerHTML = `
   <img class="season-poster-details" src="https://image.tmdb.org/t/p/w185/${seasonDetails.poster_path}"/>
   <h2>${seasonDetails.name}</h2>
   <h4>${seasonDetails.overview}`;
 
   for(let i = 0; i < episodes.length; i++){
-    seasonInfo.innerHTML += `<div id="${episodes[i].id}" class="episode-details"> <h3>Avsnitt: ${episodes[i].episode_number}</h3>
+    seasonDisplay.innerHTML += `<div id="${episodes[i].id}" class="episode-details"> <h3>Avsnitt: ${episodes[i].episode_number}</h3>
     <h4>Premiärdatum: ${episodes[i].air_date}</h4>
     <p class="episode-overview">${episodes[i].overview}</p></div>`;
   } 
-  seasonEl.appendChild(seasonInfo);
+  seasonEl.appendChild(seasonDisplay);
 
 }
 
