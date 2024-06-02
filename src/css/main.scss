@@ -92,7 +92,7 @@ header h1{
 }
 
 /* Meny */
-nav {
+#nav-menu{
   font-family: searchResult;
     background-color: $springwater;
     box-shadow: $tropicalbreeze;
@@ -102,7 +102,7 @@ nav {
     top: 0;
     height: 100vh;
     width: 250px;
-    display: hidden;
+    display: none;
     font-weight: bold;  
   
   ul {
@@ -241,3 +241,9 @@ nav a:visited{
     display: none;
   }
   
+  a{
+    color: $greytext;
+  }
+a:visited, a:active{
+  color: $greytext;
+}

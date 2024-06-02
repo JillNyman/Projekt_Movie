@@ -1,5 +1,6 @@
-
 "use strict"; 
+
+//Funktioner som rör "Kommer snart"
 
 export function render(){
 }

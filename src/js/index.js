@@ -1,11 +1,11 @@
 
 "use strict";
 
+//Funktioner som rör sökfunktionen
+
 import("./omdb").then(function (page) {
   page.render();
 });
-
-
 
 //elements
 let openBtn = document.getElementById("open-menu");
@@ -36,9 +36,7 @@ const showMovieInfo = document.getElementById("movie-info");//DIV FÖR SPECIFICS
 const searchResultTV =  document.getElementById("results-tvdb");//RESULTATLISTA SERIER
 const showTvInfo = document.getElementById("tv-info");//DIV FÖR SPECIFICS FÖR EN serie, SKA TAS BORT VID NY SÖKNING
 const seasonEl = document.getElementById("season-container"); //container där alla tv-säsonger hamnar
-//let seasonDisplay = document.getElementsByClassName("season-details");
 
-//submitBtn.addEventListener("click", searchMovies, false);
 submitBtn.addEventListener("click", displaySearchResult, false);
 
 //SÖKER EFTER FILMER
@@ -207,8 +205,6 @@ getIMDBidTV(tvDetails);
   });
 }
  
-
-
 //HÄMTA IMDB-ID FÖR ATT SEDAN GÖRA ANROP TILL OMDB OCH FÅ LISTA PÅ SKÅDISAR OSV
 async function getIMDBidMovie(movieDetails){
   let movieID = movieDetails.id;
@@ -335,12 +331,28 @@ for(let i = 0; i < seasonArray.length; i++){
   seasonList.dataset.id = seasonArray[i].season_number;
   seasonList.classList.add("seasons-div");
 
-  seasonList.innerHTML += `<img class="season-poster" src="https://image.tmdb.org/t/p/w92/${seasonArray[i].poster_path}"/>
+  seasonList.innerHTML += `<div class="poster-placeholder">
+  <img class="season-poster" src="https://image.tmdb.org/t/p/w92/${seasonArray[i].poster_path}"/>
   <p class="seasons"><b>${seasonArray[i].name}</b> Antal avsnitt: ${seasonArray[i].episode_count}</p>
-  </div>`;
+  </div>
+  `;
 
+  //Skapa div där avsnitten ska hamna
+  let episodeDiv = document.createElement("div");
+  episodeDiv.classList.add("episode-div");
+  episodeDiv.style.display = "none";
+
+  //Skapa stäng-knapp
+  let closeSeason = document.createElement("button");
+  closeSeason.innerText = "Dölj";
+  closeSeason.classList.add("close-season");
+  closeSeason.style.display = "none";
+
+  //Sätt ihop med seasonList
+  seasonList.appendChild(closeSeason);
+  seasonList.appendChild(episodeDiv);
  
-
+//Sätt ihop med föräldern
   seasonEl.appendChild(seasonList);
 }
 makeSeasonLinks(tvDetails);
@@ -376,10 +388,8 @@ showTvInfo.appendChild(streamingInfoTV);
 async function makeSeasonLinks(tvDetails){
   const TVseasons = seasonEl.querySelectorAll(".seasons-div");
   
-
   TVseasons.forEach((season) => {
-    season.addEventListener("click", async () => {    
-      
+    season.addEventListener("click", async () => {          
  
       //VID KLICK GÖRS API-ANROP
       const url = `https://api.themoviedb.org/3/tv/${tvDetails.id}/season/${season.dataset.id}?language=en-US`;
@@ -393,32 +403,49 @@ async function makeSeasonLinks(tvDetails){
       };
 
       const result = await fetch(url, options);
-      const seasonDetails = await result.json();    
+      const seasonDetails = await result.json();         
 
-      displaySeasons(seasonDetails);   
-    })
-  })
+      const episodeDiv = season.querySelector(".episode-div");
+      const closeSeason = season.querySelector(".close-season");
+
+      //Toggle div with episodes
+      if(episodeDiv.style.display === "none") {
+        episodeDiv.style.display = "block";
+        closeSeason.style.display = "block";
+        //get the episodes of the season in question
+        displaySeasons(seasonDetails, episodeDiv);
+      } else {
+        episodeDiv.style.display = "none";
+        closeSeason.style.display = "none";
+      }
+      
+      closeSeason.addEventListener("click", (e) => {
+        e.stopPropagation();
+        episodeDiv.style.display = "none";
+        closeSeason.style.display = "none";
+      });
+      
+    });
+  });
 }
 
 //VISA INFO OM SPECIFIK SERIESÄSONG
-async function displaySeasons(seasonDetails){
-  
+async function displaySeasons(seasonDetails, episodeDiv){
+ 
   let episodes = seasonDetails.episodes;
-  let seasonDisplay = document.createElement("div");
-  
-  seasonDisplay.classList.add("season-details");
 
-  seasonDisplay.innerHTML = `
-  <img class="season-poster-details" src="https://image.tmdb.org/t/p/w185/${seasonDetails.poster_path}"/>
-  <h2>${seasonDetails.name}</h2>
-  <h4>${seasonDetails.overview}`;
-
-  for(let i = 0; i < episodes.length; i++){
-    seasonDisplay.innerHTML += `<div id="${episodes[i].id}" class="episode-details"> <h3>Avsnitt: ${episodes[i].episode_number}</h3>
-    <h4>Premiärdatum: ${episodes[i].air_date}</h4>
-    <p class="episode-overview">${episodes[i].overview}</p></div>`;
-  } 
-  seasonEl.appendChild(seasonDisplay);
+  episodeDiv.innerHTML = ''; //rensa tidigare innehåll
+ 
+  episodes.forEach(episode => {
+    let episodeItem = document.createElement("div");
+    episodeItem.classList.add("episode-details");
+    episodeItem.innerHTML = `
+    <h3>Avsnitt: ${episode.episode_number}</h3>
+    <h4>Premiärdatum: ${episode.air_date}</h4>
+    <p class="episode-overview">${episode.overview}</p>
+    `;
+    episodeDiv.appendChild(episodeItem);
+  });
 
 }
 

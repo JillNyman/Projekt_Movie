@@ -143,35 +143,85 @@ $platinum: #e0e1dd;
 .seasons-div{
     width: 100%;
     display: flex;
-    flex-direction: row;
-    position: relative;
+    flex-direction: column;
+    //position: relative;
     margin-bottom: 20px;
     margin-top: 20px;
     border-top: 4px solid $flamingopink;
     padding-top: 20px;
+    
+}
+
+.poster-placeholder{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    //position: relative;   
     cursor: pointer;
 }
+
+.poster-placeholder img{
+    width: 25%;
+}
+
+.poster-placeholder p{
+    width: 50%;
+    margin-right: 5px;
+    margin-left: auto;
+    margin-bottom: 5px;
+    margin-top: auto;
+}
+/*.seasons{
+
+}*/
 
 .season-poster{
     display: block;
     margin-left: 5px;
+    width: 100px;
+}
+
+.close-season{
+    width: 50%;
+    margin: 20px auto;
+    font-family: searchResult;
+    font-style: normal;
+    font-size: 16px;   
+    font-weight: 700;
+    padding: 5px 10px;
+    background-color: $florence;  
+    border: $flamingopink solid 2px;
+    border-radius: 15px;
+    color: $greytext;
+    cursor: pointer; 
+}
+
+.close-season:hover {
+    background-color: $tequilasunrise;
+    color: $black;
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.421);
+    font-style: bold;
+  }
+.episode-div{
+    width: 100%;
 }
 
 @media only screen and (min-width: 420px) {
-.seasons{
+/*.seasons{
     position: absolute;
     bottom: 0;
     right: 10px;
-}
+}*/
 }
 @media only screen and (max-width: 419px) {
-    .seasons-div{
-        
-        flex-direction: column;
+    .poster-placeholder{
+        width: 100%;
+        display: flex;
+        flex-direction: column;  
+        cursor: pointer;
     }
 
     .season-poster{
-        position: relative;
         max-width: 92px;
         margin-top: 20px;
         
