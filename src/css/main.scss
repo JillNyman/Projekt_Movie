@@ -12,7 +12,7 @@ $tropicalbreeze: rgb(149, 199, 194);
 $springwater: rgb(190, 228, 231);
 $flamingopink: rgb(244, 144, 185);
 $tequilasunrise: rgb(255, 212, 229);
-$greytext: #504c49;
+$greytext: rgb(80, 76, 73);
 $black: #0d1b2a;
 $platinum: #e0e1dd;
 
@@ -104,6 +104,7 @@ header h1{
     width: 250px;
     display: none;
     font-weight: bold;  
+    box-shadow: 0 0 5px 2px rgba(80, 76, 73, 0.6);
   
   ul {
     list-style-type: none;
@@ -137,6 +138,24 @@ nav a:visited{
   color:$greytext;
   font-style: italic;
 }
+
+@keyframes slideIn{
+  0% {
+    transform: translateX(+100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+  
+
+#nav-menu{
+  animation: slideIn 0.8s ease-out;
+}
+
+
   
   /*Meny-knapp, öppnameny*/
   .menu-btn {
@@ -151,6 +170,7 @@ nav a:visited{
     border-radius: 15px;
     color: $greytext;
     cursor: pointer; 
+    transition: box-shadow 0.3s ease;
   }
 
   #open-menu {
@@ -162,19 +182,19 @@ nav a:visited{
   
   #close-menu{      
     width: 80%;
-    //padding: 16px 30px;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
   }
   
   
-  .menu-btn:hover, .menu-text:hover {
+  .menu-btn:hover{
     background-color: $tequilasunrise;
     color: $black;
-    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.421);
+    box-shadow: 0 0px 20px 2px rgba(244, 144, 185, 0.8);
     font-style: bold;
   }
+ 
 
   footer{
     width: 95%;
